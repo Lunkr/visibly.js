@@ -90,12 +90,12 @@ var visibly = {
         }
     },
     _visible: function () {
-        window.visibly._execute(1);
-        window.visibly.visibilitychange.call(window.visibly, 'visible');
+        this._execute(1);
+        this.visibilitychange.call(this, 'visible');
     },
     _hidden: function () {
-        window.visibly._execute(2);
-        window.visibly.visibilitychange.call(window.visibly, 'hidden');
+        this._execute(2);
+        this.visibilitychange.call(this, 'hidden');
     },
     _nativeSwitch: function () {
         this[this._getProp(2) ? '_hidden' : '_visible']();
@@ -113,8 +113,9 @@ var visibly = {
                     }
                 }
             } else { /*switch support based on prefix detected earlier*/
-                this.q.addEventListener(this._getPropName(1), function () {
-                    window.visibly._nativeSwitch.apply(window.visibly, arguments);
+                var that = this;
+                that.q.addEventListener(that._getPropName(1), function () {
+                    that._nativeSwitch.apply(that, arguments);
                 }, 1);
             }
         } catch (e) {}
